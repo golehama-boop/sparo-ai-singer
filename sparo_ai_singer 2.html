@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="ku" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#100d20">
+<title>Sparo AI Singer</title>
+<style>
+:root{color-scheme:dark;--bg:#100d20;--panel:#1b1730;--line:#393253;--purple:#9b7cff;--pink:#ff79bd;--muted:#b9b2ca}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 80% 0%,#38245d 0,transparent 36%),var(--bg);color:#fff;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;min-height:100vh}
+main{max-width:760px;margin:auto;padding:28px 18px 50px}.brand{display:flex;align-items:center;gap:12px}.logo{width:48px;height:48px;border-radius:16px;background:linear-gradient(135deg,var(--purple),var(--pink));display:grid;place-items:center;font-size:25px}.brand h1{font-size:22px;margin:0}.brand p{margin:4px 0 0;color:var(--muted);font-size:13px}
+.hero{text-align:center;padding:38px 8px 26px}.hero .note{font-size:12px;color:#d6c9ff;letter-spacing:1px}.hero h2{font-size:clamp(27px,7vw,42px);margin:10px 0}.hero p{color:var(--muted);line-height:1.8;margin:0 auto;max-width:520px}
+.panel{background:rgba(27,23,48,.94);border:1px solid var(--line);border-radius:22px;padding:20px;margin:15px 0;box-shadow:0 15px 40px #0003}.panel h3{font-size:17px;margin:0 0 14px}.step{display:inline-grid;place-items:center;background:#342957;color:#d8c9ff;border-radius:10px;width:28px;height:28px;margin-left:8px}
+label{display:block;font-size:14px;margin:12px 0 8px;color:#e8e3f2}input[type=file],select{width:100%;padding:14px;border:1px solid var(--line);border-radius:13px;background:#110e20;color:white;font-size:15px}
+.hint{color:var(--muted);font-size:12px;line-height:1.7;margin:8px 0 0}.choices{display:grid;grid-template-columns:1fr 1fr;gap:10px}.choice{border:1px solid var(--line);background:#141126;padding:14px;border-radius:14px;display:flex;align-items:center;gap:9px;font-size:14px}.choice input{accent-color:var(--purple)}
+button{width:100%;border:0;border-radius:15px;padding:16px;background:linear-gradient(100deg,var(--purple),var(--pink));font-weight:750;font-size:16px;color:#160f27;margin-top:16px}
+button:active{transform:scale(.99)}.notice{border:1px solid #66532c;background:#302719;color:#f7dfaa;border-radius:14px;padding:13px;font-size:12px;line-height:1.8;margin-top:14px}
+#status{color:#d8c9ff;font-size:13px;line-height:1.8;margin-top:12px;white-space:pre-wrap}
+audio{width:100%;margin-top:12px}.footer{text-align:center;color:var(--muted);font-size:12px;margin-top:28px}
+@media(max-width:430px){.choices{grid-template-columns:1fr}.panel{padding:16px}}
+</style>
+</head>
+<body>
+<main>
+<header class="brand"><div class="logo">♫</div><div><h1>Sparo AI Singer</h1><p>گۆرانی بە دەنگی دڵخوازت</p></div></header>
+<section class="hero"><div class="note">AI MUSIC STUDIO</div><h2>دەنگەکەت، گۆرانییەکەت 🎤</h2><p>گۆرانی و نموونەی دەنگ باربکە، زمانی کوردی سۆرانی هەڵبژێرە و ئامادەکارییەکەت بکە.</p></section>
+<section class="panel">
+<h3><span class="step">١</span>گۆرانی باربکە</h3>
+<label for="song">فایلی گۆرانی (MP3, WAV, M4A)</label><input id="song" type="file" accept="audio/*">
+<p class="hint">باشترە فایلی دەنگی پاک و بێ قسەی پاشبنەما هەڵبژێریت.</p>
+<audio id="songPreview" controls hidden></audio>
+</section>
+<section class="panel">
+<h3><span class="step">٢</span>دەنگ هەڵبژێرە</h3>
+<div class="choices">
+<label class="choice"><input type="radio" name="voice" value="my" checked> دەنگی خۆم</label>
+<label class="choice"><input type="radio" name="voice" value="permission"> دەنگی کەسێکی تر (بە ڕەزامەندی)</label>
+</div>
+<label for="voiceFile">نموونەی دەنگ باربکە</label><input id="voiceFile" type="file" accept="audio/*">
+<p class="hint">بۆ دەنگی کەسێکی تر، تەنها بە ڕەزامەندیی ڕوونی خۆی بەکاریبهێنە.</p>
+<audio id="voicePreview" controls hidden></audio>
+</section>
+<section class="panel">
+<h3><span class="step">٣</span>زمان و جۆری گۆرانی</h3>
+<label for="language">زمان</label><select id="language"><option>کوردی سۆرانی</option><option>عەرەبی</option><option>ئینگلیزی</option><option>زمانی تر</option></select>
+<label for="style">شێوازی گۆرانی</label><select id="style"><option>ئاسایی</option><option>خەمگین</option><option>خۆشحاڵ</option><option>هێواش</option></select>
+</section>
+<section class="panel">
+<h3><span class="step">٤</span>ئامادەکردن</h3>
+<label class="choice"><input type="checkbox" id="permission"> پشتڕاست دەکەمەوە مافی بەکارهێنانی ئەم دەنگە و گۆرانییەم هەیە.</label>
+<button id="generate">ئامادەکردنی AI Cover</button>
+<div id="status">ئەمە وەشانی سەرەتایی وێبسایتەکەیە. بۆ گۆڕینی ڕاستەقینەی دەنگ، پێویستە مۆدێلی AI و سێرڤەری Cloud پەیوەست بکرێت.</div>
+<div class="notice">تێبینی: ئەم پەڕەیە ئێستا ڕووکار و هەڵبژاردنی فایلەکان کارا دەکات، بەڵام هێشتا گۆرانی دروست ناکات. پەیوەستکردنی مۆدێلی AI پێویستی بە هۆستینگ/Cloud هەیە و پلانی بەخۆڕایییەکان سنووریان هەیە.</div>
+</section>
+<div class="footer">Sparo AI Singer · وەشانی سەرەتایی</div>
+</main>
+<script>
+function preview(inputId, audioId){
+ const input=document.getElementById(inputId), player=document.getElementById(audioId);
+ input.addEventListener('change',()=>{if(input.files&&input.files[0]){player.src=URL.createObjectURL(input.files[0]);player.hidden=false;}});
+}
+preview('song','songPreview'); preview('voiceFile','voicePreview');
+document.getElementById('generate').addEventListener('click',()=>{
+ const song=document.getElementById('song').files[0], voice=document.getElementById('voiceFile').files[0], ok=document.getElementById('permission').checked;
+ const status=document.getElementById('status');
+ if(!song||!voice){status.textContent='تکایە هەردوو فایلەکە باربکە: گۆرانی و نموونەی دەنگ.';return;}
+ if(!ok){status.textContent='تکایە ڕەزامەندی و مافی بەکارهێنانی دەنگ و گۆرانی پشتڕاست بکەرەوە.';return;}
+ status.textContent='فایلەکان هەڵبژێردران. ڕووکارەکە ئامادەیە؛ بۆ دروستکردنی AI Cover دەبێت backend ـی AI پەیوەست بکرێت. هیچ فایلێک لەم وەشانەدا نانێردرێت.';
+});
+</script>
+</body>
+</html>
